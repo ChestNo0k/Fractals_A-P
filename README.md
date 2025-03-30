@@ -9,6 +9,8 @@ Built using **C++**, **Qt6**, and **OpenGL**.
 - Tree fractal with interactive growth
 - Koch snowflake (planned/optional)
 - Sierpinski carpet
+- Spiral fractal
+- The Vixek **Fractal**
 - Step-by-step visualization
 - Clean UI with Qt6
 - Easy to extend with new fractal types
@@ -30,3 +32,16 @@ cmake ..
 make
 ./FractalsApp
 ```
+
+## Project Structure
+
+```
+src/
+  core/        # Fractal logic (abstract class, Tree, Carpet, etc.)
+  gui/         # Qt UI logic (windows, buttons)
+  widgets/     # OpenGL fractal widget
+```
+
+## Author
+
+Semyon @Chestno0k Ilyukhin.

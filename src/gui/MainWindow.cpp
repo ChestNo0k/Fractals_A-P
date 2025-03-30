@@ -6,8 +6,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QVBoxLayout *layout = new QVBoxLayout(central);
 
     fractalComboBox = new QComboBox(this);
+    fractalComboBox->addItem("Vicsek Fractal");
     fractalComboBox->addItem("Tree");
+    fractalComboBox->addItem("Sierpinski Carpet");
     fractalComboBox->addItem("Koch Snowflake");
+    fractalComboBox->addItem("Spiral Fractal");
 
     visualizeButton = new QPushButton("Visualize", this);
     exitButton = new QPushButton("Exit", this);

@@ -26,3 +26,10 @@ target_link_libraries(FractalsApp
     Qt6::OpenGL
     Qt6::OpenGLWidgets
 )
+
+add_custom_target(rebuild
+    COMMAND ${CMAKE_COMMAND} --build . --target clean
+    COMMAND ${CMAKE_COMMAND} .
+    COMMAND ${CMAKE_COMMAND} --build .
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+)

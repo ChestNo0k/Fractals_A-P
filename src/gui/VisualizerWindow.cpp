@@ -1,5 +1,9 @@
 #include "VisualizerWindow.h"
 #include "core/TreeFractal.h"
+#include "core/SierpinskiCarpet.h"
+#include "core/KochFractal.h"
+#include "core/SpiralFractal.h"
+#include "core/VicsekFractal.h"
 
 VisualizerWindow::VisualizerWindow(const QString &fractalType, QWidget *parent)
 : QMainWindow(parent), step(0), currentFractalType(fractalType) {
@@ -9,7 +13,16 @@ QVBoxLayout *mainLayout = new QVBoxLayout(central);
 glWidget = new FractalGLWidget(this);
 if (fractalType == "Tree") {
     glWidget->setFractal(std::make_unique<TreeFractal>());
+} else if (fractalType == "Koch Snowflake") {
+    glWidget->setFractal(std::make_unique<KochFractal>());
+} else if (fractalType == "Sierpinski Carpet") {
+    glWidget->setFractal(std::make_unique<SierpinskiCarpet>());
+} else if (fractalType == "Spiral Fractal") {
+    glWidget->setFractal(std::make_unique<SpiralFractal>());
+} else if (fractalType == "Vicsek Fractal") {
+    glWidget->setFractal(std::make_unique<VicsekFractal>());
 }
+    
 
 infoLabel = new QLabel(this);
 infoLabel->setText("Fractal: " + currentFractalType + " | Step: " + QString::number(step));

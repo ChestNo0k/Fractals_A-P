@@ -14,11 +14,11 @@ void VicsekFractal::drawVicsek(float x, float y, float size, int depth) {
 
     float newSize = size / 3.0f;
 
-    drawVicsek(x, y, newSize, depth - 1);                               // bottom-left
-    drawVicsek(x + 2 * newSize, y, newSize, depth - 1);                 // bottom-right
-    drawVicsek(x + newSize, y + newSize, newSize, depth - 1);          // center
-    drawVicsek(x, y + 2 * newSize, newSize, depth - 1);                // top-left
-    drawVicsek(x + 2 * newSize, y + 2 * newSize, newSize, depth - 1);  // top-right
+    drawVicsek(x, y, newSize, depth - 1);  
+    drawVicsek(x + 2 * newSize, y, newSize, depth - 1);                 
+    drawVicsek(x + newSize, y + newSize, newSize, depth - 1);          
+    drawVicsek(x, y + 2 * newSize, newSize, depth - 1);               
+    drawVicsek(x + 2 * newSize, y + 2 * newSize, newSize, depth - 1);  
 }
 
 void VicsekFractal::drawSquare(float x, float y, float size) {

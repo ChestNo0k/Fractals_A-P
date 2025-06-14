@@ -10,41 +10,31 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QWidget *central = new QWidget(this);
     QVBoxLayout *layout = new QVBoxLayout(central);
 
-    int elementWidth = 200;
-
     fractalComboBox = new QComboBox(this);
-    fractalComboBox->addItem("Hilbert Curve");
-    fractalComboBox->addItem("Levy C Curve");
-    fractalComboBox->addItem("H-Fractal");
-    fractalComboBox->addItem("Vicsek Fractal");
-    fractalComboBox->addItem("Tree");
-    fractalComboBox->addItem("Sierpinski Carpet");
-    fractalComboBox->addItem("Koch Snowflake");
-    fractalComboBox->addItem("Spiral Fractal");
-    fractalComboBox->setFixedWidth(elementWidth);
+    visualizeButton = new QPushButton(this);
+    settingsButton = new QPushButton(this);
+    exitButton = new QPushButton(this);
 
-    visualizeButton = new QPushButton("Visualize", this);
-    settingsButton = new QPushButton("Settings", this);
-    exitButton = new QPushButton("Exit", this);
-
-    visualizeButton->setFixedWidth(elementWidth);
-    settingsButton->setFixedWidth(elementWidth);
-    exitButton->setFixedWidth(elementWidth);
+    int width = 200;
+    visualizeButton->setFixedWidth(width);
+    settingsButton->setFixedWidth(width);
+    exitButton->setFixedWidth(width);
+    fractalComboBox->setFixedWidth(width);
 
     QHBoxLayout *comboLayout = new QHBoxLayout();
     comboLayout->addStretch();
     comboLayout->addWidget(fractalComboBox);
     comboLayout->addStretch();
 
-    QHBoxLayout *visualizeLayout = new QHBoxLayout();
-    visualizeLayout->addStretch();
-    visualizeLayout->addWidget(visualizeButton);
-    visualizeLayout->addStretch();
+    QHBoxLayout *visLayout = new QHBoxLayout();
+    visLayout->addStretch();
+    visLayout->addWidget(visualizeButton);
+    visLayout->addStretch();
 
-    QHBoxLayout *settingsLayout = new QHBoxLayout();
-    settingsLayout->addStretch();
-    settingsLayout->addWidget(settingsButton);
-    settingsLayout->addStretch();
+    QHBoxLayout *setLayout = new QHBoxLayout();
+    setLayout->addStretch();
+    setLayout->addWidget(settingsButton);
+    setLayout->addStretch();
 
     QHBoxLayout *exitLayout = new QHBoxLayout();
     exitLayout->addStretch();
@@ -52,10 +42,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     exitLayout->addStretch();
 
     layout->addLayout(comboLayout);
-    layout->addLayout(visualizeLayout);
-    layout->addLayout(settingsLayout);
+    layout->addLayout(visLayout);
+    layout->addLayout(setLayout);
     layout->addLayout(exitLayout);
-
     setCentralWidget(central);
 
     connect(visualizeButton, &QPushButton::clicked, this, &MainWindow::onVisualizeClicked);
@@ -66,21 +55,22 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     });
 
     loadAndApplySettings();
+    applyLanguage();
 }
 
 void MainWindow::loadAndApplySettings() {
     QFile file("settings.json");
 
     if (!file.exists()) {
-        QJsonObject defaultSettings;
-        defaultSettings["Theme"] = "Dark";
-        defaultSettings["WindowSize"] = "800x600";
-
-        QJsonDocument doc(defaultSettings);
-        QFile createFile("settings.json");
-        if (createFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-            createFile.write(doc.toJson());
-            createFile.close();
+        QJsonObject def;
+        def["Theme"] = "Dark";
+        def["WindowSize"] = "800x600";
+        def["Language"] = "English";
+        QJsonDocument doc(def);
+        QFile create("settings.json");
+        if (create.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            create.write(doc.toJson());
+            create.close();
         }
     }
 
@@ -92,12 +82,11 @@ void MainWindow::loadAndApplySettings() {
 
     QString theme = obj["Theme"].toString("Light");
     QString sizeStr = obj["WindowSize"].toString("800x600");
+    currentLanguage = obj["Language"].toString("English");
 
     QStringList parts = sizeStr.split("x");
     if (parts.size() == 2) {
-        int w = parts[0].toInt();
-        int h = parts[1].toInt();
-        resize(w, h);
+        resize(parts[0].toInt(), parts[1].toInt());
     }
 
     if (theme == "Dark") {
@@ -107,7 +96,38 @@ void MainWindow::loadAndApplySettings() {
     }
 }
 
+void MainWindow::applyLanguage() {
+    if (currentLanguage == "Русский") {
+        visualizeButton->setText("Визуализировать");
+        settingsButton->setText("Настройки");
+        exitButton->setText("Выход");
+
+        fractalComboBox->addItem("Фрактал Вичека");
+        fractalComboBox->addItem("Дерево");
+        fractalComboBox->addItem("Ковёр Серпинского");
+        fractalComboBox->addItem("Снежинка Коха");
+        fractalComboBox->addItem("Спиральный фрактал");
+        fractalComboBox->addItem("H-фрактал");
+        fractalComboBox->addItem("Кривая Леви");
+        fractalComboBox->addItem("Кривая Хильберта");
+    } else {
+        visualizeButton->setText("Visualize");
+        settingsButton->setText("Settings");
+        exitButton->setText("Exit");
+
+        fractalComboBox->addItem("Vicsek Fractal");
+        fractalComboBox->addItem("Tree");
+        fractalComboBox->addItem("Sierpinski Carpet");
+        fractalComboBox->addItem("Koch Snowflake");
+        fractalComboBox->addItem("Spiral Fractal");
+        fractalComboBox->addItem("H-Fractal");
+        fractalComboBox->addItem("Levy C Curve");
+        fractalComboBox->addItem("Hilbert Curve");
+    }
+}
+
 void MainWindow::onVisualizeClicked() {
-    auto visualizer = new VisualizerWindow(fractalComboBox->currentText(), size(), this);
+    QString selected = fractalComboBox->currentText();
+    auto visualizer = new VisualizerWindow(selected, size(), this);
     visualizer->show();
 }

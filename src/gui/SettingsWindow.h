@@ -23,6 +23,7 @@ private slots:
 private:
     QComboBox *resolutionComboBox;
     QComboBox *themeComboBox;
+    QComboBox *languageComboBox;
     QPushButton *applyButton;
     QPushButton *exitButton;
 };

@@ -5,7 +5,6 @@
 #include <QComboBox>
 #include <QVBoxLayout>
 #include <QWidget>
-#include <QSize>
 #include <QString>
 
 class MainWindow : public QMainWindow {
@@ -19,9 +18,11 @@ private slots:
 
 private:
     void loadAndApplySettings();
+    void applyLanguage();
 
     QPushButton *visualizeButton;
     QPushButton *settingsButton;
     QPushButton *exitButton;
     QComboBox *fractalComboBox;
+    QString currentLanguage;
 };

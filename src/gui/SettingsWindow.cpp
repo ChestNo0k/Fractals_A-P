@@ -5,15 +5,13 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow(parent) {
     QVBoxLayout *mainLayout = new QVBoxLayout(central);
 
     resolutionComboBox = new QComboBox(this);
-    resolutionComboBox->addItem("800x600");
-    resolutionComboBox->addItem("1280x720");
-    resolutionComboBox->addItem("1366x768");
-    resolutionComboBox->addItem("1920x1080");
-    resolutionComboBox->addItem("2560x1440");
+    resolutionComboBox->addItems({"800x600", "1280x720", "1366x768", "1920x1080", "2560x1440"});
 
     themeComboBox = new QComboBox(this);
-    themeComboBox->addItem("Light");
-    themeComboBox->addItem("Dark");
+    themeComboBox->addItems({"Light", "Dark"});
+
+    languageComboBox = new QComboBox(this);
+    languageComboBox->addItems({"English", "Русский"});
 
     applyButton = new QPushButton("Apply", this);
     exitButton = new QPushButton("Exit", this);
@@ -30,10 +28,11 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow(parent) {
 
     mainLayout->addWidget(resolutionComboBox);
     mainLayout->addWidget(themeComboBox);
+    mainLayout->addWidget(languageComboBox);
     mainLayout->addLayout(buttonsLayout);
 
     setCentralWidget(central);
-    setFixedSize(300, 200);
+    setFixedSize(300, 220);
 
     connect(applyButton, &QPushButton::clicked, this, &SettingsWindow::applySettings);
     connect(exitButton, &QPushButton::clicked, this, &SettingsWindow::closeSettings);
@@ -42,10 +41,12 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow(parent) {
 void SettingsWindow::applySettings() {
     QString resText = resolutionComboBox->currentText();
     QString theme = themeComboBox->currentText();
+    QString lang = languageComboBox->currentText();
 
     QJsonObject obj;
     obj["Theme"] = theme;
     obj["WindowSize"] = resText;
+    obj["Language"] = lang;
 
     QJsonDocument doc(obj);
     QFile file("settings.json");

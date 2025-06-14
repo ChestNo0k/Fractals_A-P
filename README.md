@@ -1,28 +1,34 @@
 # Fractals_A-P
 
-A minimal desktop application for step-by-step visualization of classical fractals for coursework in the discipline of Algorithmization and programming. Topic: "Development of a program for calculating and visualizing fractals"
+Минимальное десктопное приложение для пошаговой визуализации классических фракталов, созданное в рамках курсовой работы по дисциплине «Алгоритмизация и программирование».  
+Тема: «Разработка программы для расчёта и визуализации фракталов»
 
-Built using **C++**, **Qt6**, and **OpenGL**.
+Собрано с использованием **C++**, **Qt6** и **OpenGL**.
 
-## Features
+## Возможности
 
-- Tree fractal with interactive growth
-- Koch snowflake (planned/optional)
-- Sierpinski carpet
-- Spiral fractal
-- The Vixek **Fractal**
-- Step-by-step visualization
-- Clean UI with Qt6
-- Easy to extend with new fractal types
+- Фрактал дерева с пошаговым ростом
+- Снежинка Коха
+- Ковёр Серпинского
+- Спиральный фрактал
+- Фрактал Виксека
+- H-фрактал
+- Кривая Леви
+- Кривая Хильберта
+- Пошаговая визуализация
+- Поддержка двух языков интерфейса (русский / английский)
+- Переключение между светлой и тёмной темой
+- Чистый и простой интерфейс на Qt6
+- Легко расширяется новыми фракталами
 
-## Technologies
+## Технологии
 
 - Qt 6
 - OpenGL
 - CMake 3.16+
 - C++17
 
-## Build Instructions (Linux / Fedora 42)
+## Инструкция по сборке (Linux / Fedora 42)
 
 ```bash
 git clone https://github.com/your_username/Fractals_A-P.git
@@ -33,15 +39,16 @@ make
 ./FractalsApp
 ```
 
-## Project Structure
+## Структура проекта
 
 ```
 src/
-  core/        # Fractal logic (abstract class, Tree, Carpet, etc.)
-  gui/         # Qt UI logic (windows, buttons)
-  widgets/     # OpenGL fractal widget
+  core/        # Логика фракталов (абстрактный класс, дерево, ковёр и др.)
+  gui/         # Интерфейс Qt (главное окно, визуализатор, окно настроек)
+  widgets/     # OpenGL-виджет отрисовки фракталов
+settings.json  # Файл с настройками темы, языка и размера окна
 ```
 
-## Author
+## Автор
 
-Semyon @Chestno0k Ilyukhin.
+Семён Илюхин (@Chestno0k)

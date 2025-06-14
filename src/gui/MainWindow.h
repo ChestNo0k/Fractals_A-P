@@ -5,6 +5,8 @@
 #include <QComboBox>
 #include <QVBoxLayout>
 #include <QWidget>
+#include <QSize>
+#include <QString>
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -14,10 +16,12 @@ public:
 
 private slots:
     void onVisualizeClicked();
-    void onExitClicked();
 
 private:
+    void loadAndApplySettings();
+
     QPushButton *visualizeButton;
+    QPushButton *settingsButton;
     QPushButton *exitButton;
     QComboBox *fractalComboBox;
 };

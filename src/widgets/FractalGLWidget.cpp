@@ -1,4 +1,7 @@
 #include "widgets/FractalGLWidget.h"
+#include <QFile>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 FractalGLWidget::FractalGLWidget(QWidget *parent)
     : QOpenGLWidget(parent), currentStep(0) {}
@@ -15,7 +18,22 @@ void FractalGLWidget::setStep(int step) {
 
 void FractalGLWidget::initializeGL() {
     initializeOpenGLFunctions();
-    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+
+    QColor bgColor = QColor(220, 220, 220);
+
+    QFile file("settings.json");
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QByteArray data = file.readAll();
+        QJsonDocument doc = QJsonDocument::fromJson(data);
+        QJsonObject obj = doc.object();
+        QString theme = obj["Theme"].toString("Light");
+
+        if (theme == "Dark") {
+            bgColor = QColor(25, 25, 25);
+        }
+    }
+
+    glClearColor(bgColor.redF(), bgColor.greenF(), bgColor.blueF(), 1.0f);
 }
 
 void FractalGLWidget::resizeGL(int w, int h) {
@@ -32,7 +50,6 @@ void FractalGLWidget::resizeGL(int w, int h) {
 
     glMatrixMode(GL_MODELVIEW);
 }
-
 
 void FractalGLWidget::paintGL() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

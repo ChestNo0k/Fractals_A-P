@@ -7,11 +7,12 @@
 #include <QLabel>
 #include "widgets/FractalGLWidget.h"
 
+
 class VisualizerWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    VisualizerWindow(const QString &fractalType, QWidget *parent = nullptr);
+    explicit VisualizerWindow(const QString &fractalType, QSize initialSize, QWidget *parent = nullptr);
 
 private slots:
     void onNextStepClicked();
